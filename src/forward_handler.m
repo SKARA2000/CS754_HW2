@@ -17,10 +17,10 @@ classdef forward_handler
             obj.angles = angles;
         end
         function output = mtimes(A, X)
-            X = reshape(X, A.original_size, A.original_size);
-            Beta = A.transform_handler(X);
-            output = A.tomo_transform_handler(Beta, A.angles);
-            output = output(:);
+            X = reshape(X, A.original_size, A.original_size);               % Reshaping the beta vector
+            UX = A.transform_handler(X);                                    % computing U*Beta
+            output = A.tomo_transform_handler(UX, A.angles);                % computing R*U*Beta
+            output = output(:);                                             % Vectorizing the result
         end
     end
 end
