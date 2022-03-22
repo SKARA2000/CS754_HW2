@@ -17,10 +17,10 @@ classdef forward_handler_t
             obj.angles = angles;
         end
         function output = mtimes(At, Y)
-            Y = reshape(Y, At.measurement_size, size(At.angles, 2));
-            Beta = At.tomo_transform_handler(Y, At.angles, 'linear', 'Ram-Lak', 1, At.original_size);
-            output = At.transform_handler(Beta);
-            output = output(:);
+            Y = reshape(Y, At.measurement_size, size(At.angles, 2));        % Reshaping the Y vector
+            UBeta = At.tomo_transform_handler(Y, At.angles, 'linear', 'Ram-Lak', 1, At.original_size);  % computing R'*Beta
+            output = At.transform_handler(UBeta);                           % computing U'*R'*Beta
+            output = output(:);                                             % Vectorizing the result
         end
     end
 end
